@@ -1,0 +1,46 @@
+/*================================================
+ React dropdown custom styles for this components specifically *important
+*/
+.dropdownRoot {
+  position: relative;
+}
+
+.dropdownRoot .editFormHidden span {
+  margin: -3px 0px 0px 1px; 
+  display: none;
+}
+
+.dropdownRoot .editFormVisible span {
+  margin: -3px 0px 0px 1px; 
+  display: block;
+}
+
+.dropdownRoot .editFormVisible  {
+  font-size: 14px;
+  font-weight: 400;
+  margin-left: -4px;
+  border: 1px solid #dedbdb;
+}
+
+.dropdownRoot .editFormHidden {
+  font-size: 14px;
+  font-weight: 400;
+  margin-left: -4px;
+  border: 1px solid transparent;
+}
+
+.dropdownRoot .editFormHidden div:hover {
+  outline: none;
+}
+
+.dropdown-menu {
+  margin-left: -4px;
+  background: #E0EBF0;
+}
+
+.dropdown-menu div {
+  font-size: 14px;
+}
+
+/*================================================
+*/
