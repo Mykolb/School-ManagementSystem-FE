@@ -12,7 +12,6 @@ const DashboardWrap = styled.div`
 const TabsWrap = styled.div`
   width: 15%;
   height: 100vh;
-  overflow: scroll;
   // background: #269FB0;
   // color: #269FB0;
   border-right: 0.2px solid #B4B1B5;
@@ -20,7 +19,6 @@ const TabsWrap = styled.div`
 const DisplayWrap = styled.div`
   width: 85%;
   height: 100vh;
-  // overflow: scroll;
   overflow-y: scroll;
 `
 

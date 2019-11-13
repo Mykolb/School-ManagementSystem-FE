@@ -12,13 +12,11 @@ const DashboardWrap = styled.div`
 const TabsWrap = styled.div`
   width: 20%;
   height: 100vh;
-  overflow: scroll;
   background: #269FB0;
 `
 const DisplayWrap = styled.div`
   width: 80%;
   height: 100vh;
-  overflow: scroll;
 `
 
 function Dashboard() {
