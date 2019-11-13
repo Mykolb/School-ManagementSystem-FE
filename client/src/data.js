@@ -45,11 +45,6 @@ export const studentTableColumns = [
     key: 2,
   },
   {
-    title: 'Registration Date',
-    dataIndex: 'registration_date',
-    key: 3,
-  },
-  {
     title: 'First Name',
     dataIndex: 'first_name',
     key: 4,
@@ -60,99 +55,14 @@ export const studentTableColumns = [
     key: 5,
   },
   {
-    title: 'Gender',
-    dataIndex: 'gender',
-    key: 6,
-  },
-  {
-    title: 'Birthdate',
-    dataIndex: 'birthdate',
-    key: 7,
-  },
-  {
-    title: 'School Grade',
-    dataIndex: 'school_grade',
-    key: 8,
-  },
-  {
-    title: 'School Name',
-    dataIndex: 'school_name',
-    key: 9,
-  },
-  {
-    title: 'Grade Updated',
-    dataIndex: 'grade_updated',
-    key: 10,
-  },
-  {
-    title: 'Home Telephone',
-    dataIndex: 'home_telephone',
-    key: 11,
-  },
-  {
     title: 'Mobile Number',
     dataIndex: 'mobile_telephone',
-    key: 12,
-  },
-  {
-    title: 'Block Code',
-    dataIndex: 'block_code',
-    key: 13,
-  },
-  {
-    title: 'Road',
-    dataIndex: 'road',
-    key: 14,
-  },
-  {
-    title: 'Building',
-    dataIndex: 'building',
-    key: 15,
-  },
-  {
-    title: 'Flat',
-    dataIndex: 'flat',
-    key: 16,
+    key: 6,
   },
   {
     title: 'Email',
     dataIndex: 'email',
-    key: 17,
-  },
-  {
-    title: 'Notes',
-    dataIndex: 'notes',
-    key: 18,
-  },
-  {
-    title: 'Preferred Contact Type',
-    dataIndex: 'preferred_contact_method',
-    key: 19,
-  },
-  {
-    title: 'No Call',
-    dataIndex: 'no_call',
-    key: 20,
-  },
-  {
-    title: 'Delinquent',
-    dataIndex: 'delinquent',
-    key: 21,
-  },
-  {
-    title: 'Expelled',
-    dataIndex: 'expelled',
-    key: 22,
-  },
-  {
-    title: 'Location',
-    dataIndex: 'location',
-    key: 23,
-  },
-  {
-    title: 'Family ID',
-    dataIndex: 'family_id',
-    key: 24,
+    key: 7,
   }
 ];
 
@@ -175,32 +85,61 @@ export const courseTableColumns = [
         key: 2,
       },
       {
-        title: 'Course Type',
-        dataIndex: 'course_type',
-        key: 4,
-      },
-      {
-        title: 'Group Type',
-        dataIndex: 'group_type',
-        key: 5,
-      },
-      {
         title: 'School Grade',
         dataIndex: 'school_grade',
-        key: 6,
+        key: 3,
       },
       {
         title: 'Level',
         dataIndex: 'level',
-        key: 7,
+        key: 4,
       },
       {
         title: 'Course Schedule',
         dataIndex: 'course_schedule',
-        key: 8,
+        key: 5,
       },{
         title: 'Teacher',
         dataIndex: 'teacher',
-        key: 9,
+        key: 6,
       },
 ];
+
+export const staffTableColumns = [
+  {
+    title: 'Staff ID',
+    dataIndex: 'id',
+    key: 1,
+  },
+  {
+    title: 'CPR',
+    dataIndex: 'cpr',
+    key: 2,
+  },
+  {
+    title: 'Name',
+    dataIndex: 'name',
+    key: 3,
+  },
+  {
+    title: 'Short Name',
+    dataIndex: 'short_name',
+    key: 4,
+  },
+  {
+    title: 'Mobile Number',
+    dataIndex: 'mobile_number',
+    key: 5,
+  },
+  {
+    title: 'Email',
+    dataIndex: 'email',
+    key: 7,
+  }
+]
+
+export const staffCardTabs = [
+  {key: "Staff Information"},
+  {key: "Courses"},
+  // {key: "Work Log"}
+]

@@ -9,7 +9,7 @@ import Documents from '../documents/Documents';
 import MainUserPage from '../mainUserPage/Main';
 import Parents from '../parents/Parents';
 import CourseTable from '../courses/courseList/CourseTable';
-import StaffTable from '../staff/StaffTable';
+import StaffTable from '../staff/staffList/StaffTable';
 
 function Display({ navigation }) {
 
