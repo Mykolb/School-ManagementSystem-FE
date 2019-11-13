@@ -136,8 +136,10 @@ import {
           let termArr = ['select'];
           let termObj = {};
           for (let i = 0; i < action.payload.length; i++) {
-            termArr.push(action.payload[i].name);
-            termObj[action.payload[i].name] = action.payload[i].id;
+            termArr.push(action.payload[i].name + ' sub ' + action.payload[i].subsection);
+    
+            termObj[action.payload[i].name + ' sub ' + action.payload[i].subsection] = action.payload[i].id;
+            
           }
           return {
             ...state,

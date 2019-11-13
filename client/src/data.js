@@ -9,30 +9,25 @@ export const adminDashboardTabs = [
   // {key: "Tables"},
   // {key: "Queries"},
   // {key: "Documents"},
-
 ]
-
 export const parentDashboardTabs = [
   {key: "Main"},
   {key: "Courses"},
   // {key: "Schedule"},
   {key: "Payments"},
 ]
-
 export const staffDashboardTabs = [
   {key: "Main"},
   {key: "Students"},
   {key: "Courses"},
   // {key: "Work Log"},
 ]
-
 export const studentCardTabs = [
   {key: "Student Information"},
   {key: "Courses"},
   {key: "Progress"},
   {key: "Billing"}
 ]
-
 export const studentTableColumns = [
   {
     title: 'Student ID',
@@ -65,14 +60,10 @@ export const studentTableColumns = [
     key: 7,
   }
 ];
-
-
 export const courseCardTabs = [
   {key: "Course Information"},
   {key: "Enrolled Students"}
 ]
-
-
 export const courseTableColumns = [
       {
         title: 'Course ID',
@@ -104,7 +95,6 @@ export const courseTableColumns = [
         key: 6,
       },
 ];
-
 export const staffTableColumns = [
   {
     title: 'Staff ID',
@@ -137,7 +127,6 @@ export const staffTableColumns = [
     key: 7,
   }
 ]
-
 export const staffCardTabs = [
   {key: "Staff Information"},
   {key: "Courses"},

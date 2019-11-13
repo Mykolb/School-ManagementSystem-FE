@@ -40,21 +40,37 @@ const Button = styled.button`
 
 
 function CourseRegistrationForm(props) {
-  const [student, setStudent] = useState({cpr: '', registrationDate: '', firstName: '', additionalNames: '', 
-                                          gender: '', birthdate: '', schoolGradeId: '', schoolName: '', 
-                                          gradeUpdated: '', homeTelephone: '', mobileTelephone: '', 
-                                          block: '', road: '', building: '', flat: '', email: '', 
-                                          notes: '', contactTypeId: '', noCall: false, delinquent: false,
-                                          expelled: false, locationId: ''});
+  const [course, setCourse] = useState({
+                                          term_id: '', 
+                                          course_type_id: '', 
+                                          group_type_id: '', 
+                                          school_grade_id: '', 
+                                          level_id: '', 
+                                          section: '', 
+                                          subsection: '', 
+                                          hourly_rate: '',
+                                          course_schedule_id: '', 
+                                          room_id: '', 
+                                          start_time: '', 
+                                          end_time: '', 
+                                          teacher_id: '', 
+                                          notes: '', 
+                                          status: '', 
+                                          textbook: '' //should be added but it's not yet added into db
+                                        });
 
  
-  // set arrays of foreign key values to use in the dropdown (except 'gender' array it's not a foreign key)
-  const genderArr = ['select', 'F', 'M'];
-  const [gender, setGender] = useState(genderArr[0])
-  const [location, setLocation] = useState(props.locationList[0]);
-  const [contact, setContact] = useState(props.preferredContactMethodList[0]);
+  // set arrays of foreign key values to use in the dropdown (except 'statusArr' array it's not a foreign key)
+  const [term, setTerm] = useState(props.termList[0])
+  const [courseType, setCourseType] = useState(props.courseTypeList[0]);
+  const [groupType, setGroupType] = useState(props.groupTypeList[0]);
   const [schoolGrade, setSchoolGrade] = useState(props.schoolGradeList[0]);
-  const [block, setBlock] = useState(props.blockList[0]);
+  const [level, setLevel] = useState(props.levelList[0]);
+  const [courseSchedule, setCourseSchedule] = useState(props.courseScheduleList[0]);
+  const [room, setRoom] = useState(props.roomList[0]);
+  const statusArr = ['select', 'active', 'waitlist', 'completed', 'cancelled'];
+  const [status, setStatus] = useState(statusArr[0]);
+  const [teacher, setTeacher] = useState(props.teacherList[0]);
 
   // handle required fields (make them all required for now)
   const [errorBorderCpr, setErrorBorderCpr] = useState('transparent'); //error #C73642
@@ -82,120 +98,110 @@ function CourseRegistrationForm(props) {
   useEffect(() => {
 
   }, [loading])
-
-
+  
   function handleChange(event) {
-    setStudent({ ...student, [event.target.name]: event.target.value })
-  }                                        
+    setCourse({ ...course, [event.target.name]: event.target.value });
+  }   
 
   function handleSubmit(event) {
     event.preventDefault();
 
     // check for required fields
-    if (student.cpr === '' || student.firstName === '' || 
-        student.additionalNames === '' || student.gender === '' ||
-        student.birthdate === '' || student.schoolGradeId === '' || 
-        student.schoolName === '' || student.homeTelephone === '' ||
-        student.mobileTelephone === '' || student.block === '' || 
-        student.road === '' || student.building === '' ||
-        student.flat === '' || student.email === '' || 
-        student.notes === '' || student.contactTypeId === '' ||
-        student.locationId === '') 
+    if (course.term_id === '' || course.course_type_id === '' || 
+        course.group_type_id === '' || course.school_grade_id === '' ||
+        course.level_id === '' || course.section === '' || 
+        course.subsection === '' || course.hourly_rate === '' ||
+        course.course_schedule_id === '' || course.room_id === '' || 
+        course.start_time === '' || course.end_time === '' ||
+        course.teacher_id === '' || course.notes === '' || course.status === '') 
       { 
         // highlight all that were missed
-        if (student.cpr === '') {
+        if (course.term_id === '') {
           setErrorBorderCpr('#ef6570');
         } 
-        if (student.firstName === '') {
+        if (course.course_type_id === '') {
           setErrorBorderFirstName('#ef6570');
         } 
-        if (student.additionalNames === '') {
+        if (course.group_type_id === '') {
           setErrorBorderAdditionalNames('#ef6570');
         }
-        if (student.gender === '') {
+        if (course.school_grade_id === '') {
           setErrorBorderGender('#ef6570');
         }
-        if (student.birthdate === '') {
+        if (course.level_id === '') {
           setErrorBorderBirthdate('#ef6570');
         }
-        if (student.schoolGradeId === '') {
+        if (course.section === '') {
           setErrorBorderSchoolGrade('#ef6570');
         }
-        if (student.schoolName === '') {
+        if (course.subsection === '') {
           setErrorBorderSchoolName('#ef6570');
         }
-        if (student.homeTelephone === '') {
+        if (course.hourly_rate === '') {
           setErrorBorderHomeTelephone('#ef6570');
         }
-        if (student.mobileTelephone === '') {
+        if (course.course_schedule_id === '') {
           setErrorBorderMobileTelephone('#ef6570');
         }
-        if (student.block === '') {
+        if (course.room_id === '') {
           setErrorBorderBlock('#ef6570');
         }
-        if (student.road === '') {
+        if (course.start_time === '') {
           setErrorBorderRoad('#ef6570');
         }
-        if (student.building === '') {
+        if (course.end_time === '') {
           setErrorBorderBuilding('#ef6570');
         }
-        if (student.flat === '') {
+        if (course.teacher_id === '') {
           setErrorBorderFlat('#ef6570');
         }
-        if (student.email === '') {
+        if (course.notes === '') {
           setErrorBorderEmail('#ef6570');
         }
-        if (student.notes === '') {
+        if (course.status === '') {
           setErrorBorderNotes('#ef6570');
-        }
-        if (student.contactTypeId === '') {
-          setErrorBorderContactType('#ef6570');
-        }
-        if (student.locationId === '') {
-          setErrorBorderLocation('#ef6570');
         }
     
     } else {
 
-        const newDate = moment();
-        const newDateISOFormat = newDate.toISOString();
-        const birthdateDate = moment(student.birthdate).toDate();
-        const birthdateISO = birthdateDate.toISOString()
-
-        const newStudent = {
-          "cpr": student.cpr.toString(),
-          "registration_date": newDateISOFormat,
-          "first_name": student.firstName,
-          "additional_names": student.additionalNames,
-          "gender": student.gender,
-          "birthdate": birthdateISO,
-          "school_grade_id": student.schoolGradeId,
-          "school_name": student.schoolName,
-          "home_telephone": student.homeTelephone.toString(),
-          "mobile_telephone": student.mobileTelephone.toString(),
-          "block_code": parseInt(student.block),
-          "road": student.road.toString(),
-          "building": student.building.toString(),
-          "flat": student.flat.toString(),
-          "email": student.email,
-          "notes": student.notes,
-          "preferred_contact_type_id": student.contactTypeId,
-          "no_call": false,
-          "delinquent": false,
-          "expelled": false,
-          "location_id": student.locationId,
+        const newCourse = {
+          term_id: course.term_id, 
+          course_type_id: course.course_type_id, 
+          group_type_id: course.group_type_id, 
+          school_grade_id: course.school_grade_id, 
+          level_id: course.level_id, 
+          section: course.section, 
+          subsection: course.subsection, 
+          hourly_rate: course.hourly_rate,
+          course_schedule_id: course.course_schedule_id, 
+          room_id: course.room_id, 
+          start_time: course.start_time, 
+          end_time: course.end_time, 
+          teacher_id: course.teacher_id, 
+          notes: course.notes, 
+          status: course.status
         }
 
-        props.createNewStudent(newStudent, props.setNewRecord, props.newRecord, 
+        props.createNewCourse(newCourse, props.setNewRecord, props.newRecord, 
                               props.displaySuccessMessageTimeout, props.setSavePrevState);
 
         // reset form fields
-        setStudent({cpr: '', registrationDate: '', firstName: '', additionalNames: '', 
-                    gender: '', birthdate: '', schoolGradeId: '', schoolName: '', 
-                    gradeUpdated: '', homeTelephone: '', mobileTelephone: '', 
-                    block: '', road: '', building: '', flat: '', email: '', 
-                    notes: '', contactTypeId: '', noCall: false, delinquent: false,
-                    expelled: false, locationId: ''
+        setCourse({
+                    term_id: '', 
+                    course_type_id: '', 
+                    group_type_id: '', 
+                    school_grade_id: '', 
+                    level_id: '', 
+                    section: '', 
+                    subsection: '', 
+                    hourly_rate: '',
+                    course_schedule_id: '', 
+                    room_id: '', 
+                    start_time: '', 
+                    end_time: '', 
+                    teacher_id: '', 
+                    notes: '', 
+                    status: ''
                    });
 
         // hide the form by reusing the cancel button method
@@ -206,43 +212,42 @@ function CourseRegistrationForm(props) {
   function handleCancel(event) {
     event.preventDefault();
     props.handleCancelButtonOnForm();
-  }
+  }                                     
 
-  function handleGenderDropdown(e) {
+  function handleTermDropdown(e) {
     //reassign the dropdown value to the one selected
     let index;
-    for (let i = 0; i < genderArr.length; i++) {
-      if (genderArr[i] === e.value) {
+    for (let i = 0; i < props.termList.length; i++) {
+      if (props.termList[i] === e.value) {
         index = i;
       }
     }
-    setStudent({...student, gender: e.value});
-    setGender(genderArr[index]); 
+    setCourse({...course, term_id: props.termIdLookup[e.value]});
+    setTerm(props.termList[index]); 
   }
   
-  function handleLocationDropdown(e) {
+  function handleCourseTypeDropdown(e) {
     //reassign the dropdown value to the one selected
     let index;
-    for (let i = 0; i < props.locationList.length; i++) {
-      if (props.locationList[i] === e.value) {
+    for (let i = 0; i < props.courseTypeList.length; i++) {
+      if (props.courseTypeList[i] === e.value) {
         index = i;
       }
     }
-    setStudent({...student, locationId: props.locationIdLookup[e.value]});
-    setLocation(props.locationList[index]);
-    console.log('LOCATION DROPDOWN: ', props.locationIdLookup[e.value], props.locationIdLookup)
+    setCourse({...course, course_type_id: props.courseTypeIdLookup[e.value]});
+    setCourseType(props.courseTypeList[index]);
   }
 
-  function handleContactMethodDropdown(e) {
+  function handleGroupTypeDropdown(e) {
     //reassign the dropdown value to the one selected
     let index;
-    for (let i = 0; i < props.preferredContactMethodList.length; i++) {
-      if (props.preferredContactMethodList[i] === e.value) {
+    for (let i = 0; i < props.groupTypeList.length; i++) {
+      if (props.groupTypeList[i] === e.value) {
         index = i;
       }
     }
-    setStudent({...student, contactTypeId: props.preferredContactMethodIdLookup[e.value]});
-    setContact(props.preferredContactMethodList[index]);
+    setCourse({...course, group_type_id: props.groupTypeIdLookup[e.value]});
+    setGroupType(props.groupTypeList[index]);
   }
 
   function handleSchoolGradeDropdown(e) {
@@ -253,20 +258,68 @@ function CourseRegistrationForm(props) {
         index = i;
       }
     }
-    setStudent({...student, schoolGradeId: props.schoolGradeIdLookup[e.value]});
+    setCourse({...course, school_grade_id: props.schoolGradeIdLookup[e.value]});
     setSchoolGrade(props.schoolGradeList[index]);
   }
 
-  function handleBlockDropdown(e) {
+  function handleLevelDropdown(e) {
     //reassign the dropdown value to the one selected
     let index;
-    for (let i = 0; i < props.blockList.length; i++) {
-      if (props.blockList[i] === e.value) {
+    for (let i = 0; i < props.levelList.length; i++) {
+      if (props.levelList[i] === e.value) {
         index = i;
       }
     }
-    setStudent({...student, block: props.blockIdLookup[e.value]});
-    setBlock(props.blockList[index]);
+    setCourse({...course, level_id: props.levelListIdLookup[e.value]});
+    setLevel(props.levelList[index]);
+  }
+
+  function handleCourseScheduleDropdown(e) {
+    //reassign the dropdown value to the one selected
+    let index;
+    for (let i = 0; i < props.courseScheduleList.length; i++) {
+      if (props.courseScheduleList[i] === e.value) {
+        index = i;
+      }
+    }
+    setCourse({...course, course_schedule_id: props.courseScheduleIdLookup[e.value]});
+    setCourseSchedule(props.courseScheduleList[index]);
+  }
+
+  function handleRoomDropdown(e) {
+    //reassign the dropdown value to the one selected
+    let index;
+    for (let i = 0; i < props.roomList.length; i++) {
+      if (props.roomList[i] === e.value) {
+        index = i;
+      }
+    }
+    setCourse({...course, room_id: props.roomIdLookup[e.value]});
+    setRoom(props.roomList[index]);
+  }
+
+  function handleStatusDropdown(e) {
+    //reassign the dropdown value to the one selected
+    let index;
+    for (let i = 0; i < statusArr.length; i++) {
+      if (statusArr[i] === e.value) {
+        index = i;
+      }
+    }
+    setCourse({...course, status: e.value});
+    setStatus(statusArr[index]); 
+  }
+
+  function handleTeacherDropdown(e) {
+    //reassign the dropdown value to the one selected
+    let index;
+    for (let i = 0; i < props.teacherList.length; i++) {
+      if (props.teacherList[i] === e.value) {
+        index = i;
+      }
+    }
+    setCourse({...course, teacher_id: props.teacherIdLookup[e.value]});
+    setTeacher(props.teacherList[index]);
   }
 
   {if (props.createNewStudentIsLoading) {
@@ -278,181 +331,174 @@ function CourseRegistrationForm(props) {
             <div style={{display: 'grid', textAlign: 'left', gridTemplateColumns: '1fr 1fr 1fr 1fr',
                          gridGap: '15px', margin: '10px'}}>
               <div >
-                <label>CPR</label>
+                <label>Term</label>
                 <div style={{border: `1px solid ${errorBorderCpr}`, borderRadius: '3px'}}>
-                  <Input
-                    type="text"
-                    name="cpr"
-                    value={student.cpr}
-                    onChange={handleChange} />
-                </div>
-              </div>
-              <div>
-                <label>First Name</label>
-                <div style={{border: `1px solid ${errorBorderFirstName}`, borderRadius: '3px'}}>
-                  <Input
-                    type="text"
-                    name="firstName"
-                    value={student.firstName}
-                    onChange={handleChange} />
-                </div>
-              </div>
-              <div style={{gridColumn: 'span 2'}}>
-                <label>Additional names</label>
-                <div style={{border: `1px solid ${errorBorderAdditionalNames}`, borderRadius: '3px'}}>
-                  <Input 
-                    style={{width: '100%'}}
-                    type="text"
-                    name="additionalNames"
-                    value={student.additionalNames}
-                    onChange={handleChange} />
-                </div>
-              </div>
-              <div>
-                <label>Gender</label>
-                <div style={{border: `1px solid ${errorBorderGender}`, borderRadius: '3px'}}>
-                  <Dropdown 
-                    onChange={handleGenderDropdown} 
-                    controlClassName='myControlClassName' 
+                  <Dropdown
+                    onChange={handleTermDropdown} 
+                    controlClassName='myControlClassName'
                     className='dropdownRoot' 
-                    options={genderArr}   
-                    value={gender} />
+                    menuClassName='myMenuClassName'
+                    options={props.termList}   
+                    value={term}/>
                 </div>
               </div>
               <div>
-                <label>Email</label>
+                <label>Course Type</label>
+                <div style={{border: `1px solid ${errorBorderFirstName}`, borderRadius: '3px'}}>
+                  <Dropdown
+                    onChange={handleCourseTypeDropdown} 
+                    controlClassName='myControlClassName'
+                    className='dropdownRoot' 
+                    menuClassName='myMenuClassName'
+                    options={props.courseTypeList}   
+                    value={courseType}/>
+                </div>
+              </div>
+              <div>
+                <label>Group Type </label>
+                <div style={{border: `1px solid ${errorBorderAdditionalNames}`, borderRadius: '3px'}}>
+                  <Dropdown
+                    onChange={handleGroupTypeDropdown} 
+                    controlClassName='myControlClassName'
+                    className='dropdownRoot' 
+                    menuClassName='myMenuClassName'
+                    options={props.groupTypeList}   
+                    value={groupType}/>
+                </div>
+              </div>
+              <div>
+                <label>School Grade</label>
+                <div style={{border: `1px solid ${errorBorderGender}`, borderRadius: '3px'}}>
+                  <Dropdown
+                    onChange={handleSchoolGradeDropdown} 
+                    controlClassName='myControlClassName'
+                    className='dropdownRoot' 
+                    menuClassName='myMenuClassName'
+                    options={props.schoolGradeList}   
+                    value={schoolGrade}/>
+                </div>
+              </div>
+              <div>
+                <label>Level</label>
                 <div style={{border: `1px solid ${errorBorderEmail}`, borderRadius: '3px'}}>
-                  <Input
-                    type="email"
-                    name="email"
-                    value={student.email}
-                    onChange={handleChange} />
+                  <Dropdown
+                    onChange={handleLevelDropdown} 
+                    controlClassName='myControlClassName'
+                    className='dropdownRoot' 
+                    menuClassName='myMenuClassName'
+                    options={props.levelList}   
+                    value={level}/>
                 </div>
               </div>
               <div>
-                <label>School Name</label>
+                <label>Section</label>
                 <div style={{border: `1px solid ${errorBorderSchoolName}`, borderRadius: '3px'}}>
-                  <Input
+                  <Input 
                     type="text"
-                    name="schoolName"
-                    value={student.schoolName}
-                    onChange={handleChange} />
+                    name="section"
+                    value={course.section}
+                    onChange={handleChange}/>
                 </div>
               </div>
               <div >
-                <label>Birth date</label>
+                <label>Subsection</label>
                 <div style={{border: `1px solid ${errorBorderBirthdate}`, borderRadius: '3px'}}>
-                  <Input
-                    type="date"
-                    name="birthdate"
-                    value={student.birthdate}
-                    onChange={handleChange} />
+                  <Input 
+                    type='text' 
+                    name="subsection"
+                    value={course.subsection}
+                    onChange={handleChange}/>
                 </div>
               </div>
               <div>
-                <label>Location</label>
+                <label>Hourly Rate</label>
                 <div style={{border: `1px solid ${errorBorderLocation}`, borderRadius: '3px'}}>
-                  <Dropdown 
-                    onChange={handleLocationDropdown} 
-                    value={location} 
-                    controlClassName='myControlClassName' 
-                    className='dropdownRoot' 
-                    options={props.locationList} />
+                  <Input 
+                    type='text' 
+                    name="hourly_rate"
+                    value={course.hourly_rate}
+                    onChange={handleChange}/>
                 </div>
               </div>
               <div>
-                <label>Home Telephone</label>
+                <label>Course Schedule</label>
                 <div style={{border: `1px solid ${errorBorderHomeTelephone}`, borderRadius: '3px'}}>
-                  <Input
-                    type="text"
-                    name="homeTelephone"
-                    value={student.homeTelephone}
-                    onChange={handleChange} />
+                  <Dropdown
+                    onChange={handleCourseScheduleDropdown} 
+                    controlClassName='myControlClassName'
+                    className='dropdownRoot' 
+                    menuClassName='myMenuClassName'
+                    options={props.courseScheduleList}   
+                    value={courseSchedule}/>
                 </div>
               </div>
               <div>
-                <label>Mobile Telephone</label>
+                <label>Teacher</label>
                 <div style={{border: `1px solid ${errorBorderMobileTelephone}`, borderRadius: '3px'}}>
-                  <Input
-                    type="text"
-                    name="mobileTelephone"
-                    value={student.mobileTelephone}
-                    onChange={handleChange} />
+                  <Dropdown
+                    onChange={handleTeacherDropdown} 
+                    controlClassName='myControlClassName'
+                    className='dropdownRoot' 
+                    menuClassName='myMenuClassName'
+                    options={props.teacherList}   
+                    value={teacher}/>
                 </div>
               </div>
               <div>
-                <label>Preferred contact method</label>
+                <label>Room</label>
                 <div style={{border: `1px solid ${errorBorderContactType}`, borderRadius: '3px'}}>
-                  <Dropdown 
-                    onChange={handleContactMethodDropdown} 
-                    value={contact} 
-                    controlClassName='myControlClassName' 
+                  <Dropdown
+                    onChange={handleRoomDropdown} 
+                    controlClassName='myControlClassName'
                     className='dropdownRoot' 
-                    options={props.preferredContactMethodList} />
+                    menuClassName='myMenuClassName'
+                    options={props.roomList}   
+                    value={room}/>
                 </div>
               </div>
               <div>
-                <label>Block</label>
+                <label>Start Time</label>
                 <div style={{border: `1px solid ${errorBorderBlock}`, borderRadius: '3px'}}>
-                  <Dropdown 
-                    onChange={handleBlockDropdown} 
-                    controlClassName='myControlClassName' 
-                    className='dropdownRoot' 
-                    options={props.blockList}   
-                    value={block} />
+                  <Input 
+                    type="time"
+                    name="start_time"
+                    value={course.start_time}
+                    onChange={handleChange}/>
                 </div>
               </div>
               <div>
-                <label>Road</label>
+                <label>End Time</label>
                 <div style={{border: `1px solid ${errorBorderRoad}`, borderRadius: '3px'}}>
-                  <Input
-                    type="text"
-                    name="road"
-                    value={student.road}
-                    onChange={handleChange} />
+                  <Input 
+                    type="time"
+                    name="end_time"
+                    value={course.end_time}
+                    onChange={handleChange}/>
                 </div>
               </div>
               <div>
-                <label>Building</label>
+                <label>Status</label>
                 <div style={{border: `1px solid ${errorBorderBuilding}`, borderRadius: '3px'}}>
-                  <Input
-                    type="text"
-                    name="building"
-                    value={student.building}
-                    onChange={handleChange} />
-                </div>
-              </div>
-              <div>
-                <label>Flat</label>
-                <div style={{border: `1px solid ${errorBorderFlat}`, borderRadius: '3px'}}>
-                  <Input
-                    type="text"
-                    name="flat"
-                    value={student.flat}
-                    onChange={handleChange} />
-                </div>
-              </div>
-              <div>
-                <label>School grade</label>
-                <div style={{border: `1px solid ${errorBorderSchoolGrade}`, borderRadius: '3px'}}>
-                  <Dropdown 
-                    onChange={handleSchoolGradeDropdown} 
-                    value={schoolGrade} 
-                    controlClassName='myControlClassName' 
+                  <Dropdown
+                    onChange={handleStatusDropdown} 
+                    controlClassName='myControlClassName'
                     className='dropdownRoot' 
-                    options={props.schoolGradeList} />
+                    menuClassName='myMenuClassName'
+                    options={statusArr}   
+                    value={status}/>
                 </div>
               </div>
               <div style={{gridColumn: 'span 4'}}>
                 <label>Notes</label>
-                <div style={{border: `1px solid ${errorBorderNotes}`, borderRadius: '3px'}}>
+                <div style={{border: `1px solid ${errorBorderFlat}`, borderRadius: '3px'}}>
                   <textarea 
                     style={{width: '100%', height: '80px', outline: 'none', 
-                            border: '1px solid transparent', borderRadius: '3px'}}
+                            border: '1px solid transparent', borderRadius: '3px', 
+                            fontSize: '14px', fontWeight: '400', marginLeft: '-2px'}}
                     type="text"
                     name="notes"
-                    value={student.notes}
-                    onChange={handleChange} />
+                    value={course.notes}
+                    onChange={handleChange}/>
                 </div>
               </div>
             </div>
@@ -474,15 +520,23 @@ function CourseRegistrationForm(props) {
 
 const mapStateToProps = state => {
   return {
-    locationList: state.studentsReducer.locationList,
-    locationIdLookup: state.studentsReducer.locationIdLookup,
-    preferredContactMethodList: state.studentsReducer.preferredContactMethodList,
-    preferredContactMethodIdLookup: state.studentsReducer.preferredContactMethodIdLookup,
-    schoolGradeList: state.studentsReducer.schoolGradeList,
-    schoolGradeIdLookup: state.studentsReducer.schoolGradeIdLookup,
-    blockList: state.studentsReducer.blockList,
-    blockIdLookup: state.studentsReducer.blockIdLookup,
-    createNewStudentIsLoading: state.studentsReducer.createNewStudentIsLoading
+    courseById: state.coursesReducer.courseById,
+    termList: state.coursesReducer.termList,
+    termIdLookup: state.coursesReducer.termIdLookup,
+    courseTypeList: state.coursesReducer.courseTypeList,
+    courseTypeIdLookup: state.coursesReducer.courseTypeIdLookup,
+    groupTypeList: state.coursesReducer.groupTypeList,
+    groupTypeIdLookup: state.coursesReducer.groupTypeIdLookup,
+    schoolGradeList: state.coursesReducer.schoolGradeList,
+    schoolGradeIdLookup: state.coursesReducer.schoolGradeIdLookup,
+    levelList: state.coursesReducer.levelList,
+    levelListIdLookup: state.coursesReducer.levelListIdLookup,
+    courseScheduleList: state.coursesReducer.courseScheduleList,
+    courseScheduleIdLookup: state.coursesReducer.courseScheduleIdLookup,
+    roomList: state.coursesReducer.roomList,
+    roomIdLookup: state.coursesReducer.roomIdLookup,
+    teacherList: state.coursesReducer.teacherList,
+    teacherIdLookup: state.coursesReducer.teacherIdLookup
   };
 };
 

@@ -290,7 +290,7 @@ function CourseInfoTab(props) {
         index = i;
       }
     }
-    setCourse({...course, level_id: props.levelIdLookup[e.value]});
+    setCourse({...course, level_id: props.levelListIdLookup[e.value]});
     setLevel(props.levelList[index]);
   }
 
@@ -440,8 +440,7 @@ function CourseInfoTab(props) {
             name="section"
             value={course.section}
             onChange={handleChange}
-            disabled={disabled}
-          />
+            disabled={disabled}/>
         </Data>
       </div>
       <div >
@@ -556,8 +555,7 @@ function CourseInfoTab(props) {
             name="notes"
             value={course.notes}
             onChange={handleChange}
-            disabled={disabled}
-            />
+            disabled={disabled}/>
         </Data>
       </div>
       </div>
