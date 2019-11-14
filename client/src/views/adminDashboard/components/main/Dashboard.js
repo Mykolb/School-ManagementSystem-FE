@@ -12,8 +12,6 @@ const DashboardWrap = styled.div`
 const TabsWrap = styled.div`
   width: 15%;
   height: 100vh;
-  // background: #269FB0;
-  // color: #269FB0;
   border-right: 0.2px solid #B4B1B5;
 `
 const DisplayWrap = styled.div`

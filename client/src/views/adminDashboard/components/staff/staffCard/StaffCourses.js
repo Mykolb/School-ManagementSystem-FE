@@ -1,21 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
-import { getCoursesByStaff } from '../../../../../actions/adminDashboardActions/staff/staffActions';
+import { getCoursesByStudent } from '../../../../../actions/adminDashboardActions/students/studentsActions';
 import { Table, Spin } from 'antd';
 import 'antd/dist/antd.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import './StaffCourses.css'
 
-// import '../mainStyle/mainCard.scss'
-
-const StaffCourses = props => {
+const StudentCourses = props => {
   const [search, setSearch] = useState('');
   const [form, setForm] = useState(false);
 
 
   useEffect(() => {
-    props.getCoursesByStaff(props.id);
+    props.getCoursesByStudent(props.id);
   }, [])
 
   const handleCancelButtonOnForm = () => {
@@ -72,31 +71,31 @@ const StaffCourses = props => {
     },
   ];
 
-  // const StaffData = props.StaffList.sort((a, b) => {
+  // const studentData = props.studentList.sort((a, b) => {
   //   return b.id - a.id
   // }
   // )
 
   return (
-    <div>
+    <div className="student-courses" style={{marginLeft: "-20px" }}>
       
       {props.isLoading ? (
-        <Spin style={{ marginTop: '150px' }} size="large" />
+        <Spin style={{ marginTop: '150px'}} size="large" />
       ) : (
           <Table
-            className="rowHover"
+            className=""
             dataSource={props.courseList}
             columns={columns}
-            pagination={{ pageSize: 15 }}
+            pagination={false}
             rowKey='id'
-            onRow={(record, rowIndex) => {
-              return {
-                onClick: event => {
-                  // props.setCourseView('courseCardView')
-                  // props.setCourseID(record.id)
-                }
-              };
-            }}
+            // onRow={(record, rowIndex) => {
+            //   return {
+            //     onClick: event => {
+            //       // props.setNavigation('courseCardView')
+            //       // props.setCourseID(record.id)
+            //     }
+            //   };
+            // }}
           />
         )}
     </div>
@@ -105,8 +104,8 @@ const StaffCourses = props => {
 
 const mapStateToProps = state => {
   return {
-    isLoading: state.staffReducer.courseListIsLoading,
-    courseList: state.staffReducer.courseList,
+    isLoading: state.studentsReducer.courseListIsLoading,
+    courseList: state.studentsReducer.courseList,
     // error: state.coursesReducer.error,
   };
 };
@@ -114,7 +113,7 @@ const mapStateToProps = state => {
 export default withRouter(
   connect(
     mapStateToProps,
-    { getCoursesByStaff }
-  )(StaffCourses)
+    { getCoursesByStudent }
+  )(StudentCourses)
 )
 

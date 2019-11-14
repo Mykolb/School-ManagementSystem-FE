@@ -78,13 +78,13 @@ const StudentCourses = props => {
   // )
 
   return (
-    <div>
+    <div className="student-courses" style={{marginLeft: "-20px"}}>
       
       {props.isLoading ? (
         <Spin style={{ marginTop: '150px' }} size="large" />
       ) : (
           <Table
-            className="rowHover"
+            className=""
             dataSource={props.courseList}
             columns={columns}
             pagination={{ pageSize: 15 }}

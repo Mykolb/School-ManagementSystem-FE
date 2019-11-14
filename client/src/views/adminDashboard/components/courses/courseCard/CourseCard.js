@@ -80,7 +80,7 @@ const CourseCard = props => {
                        selected={selected} setCourseId={props.setCourseId}/>
             </TabsWrap>
             <DisplayWrap>
-              <DisplayContent navigation={navigation} courseData={props.courseById} />
+              <DisplayContent setNavigation={setNavigation} navigation={navigation} courseData={props.courseById} />
             </DisplayWrap>
         </CardWrap>
         
