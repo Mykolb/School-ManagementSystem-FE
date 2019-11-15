@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import CourseInfoTab from './CourseInfoTab';
+import CourseStudents from './CourseStudents';
 
 
 
@@ -12,7 +13,7 @@ function DisplayContent({navigation, courseData, resetForm}) {
   {if (navigation === "Course Information") {
     return <CourseInfoTab courseData={courseData} resetForm={resetForm}/>
   } else if (navigation === "Enrolled Students") {
-     return <div>Enrolled Students</div>
+     return <CourseStudents courseData={courseData} />
   } 
   }
 }

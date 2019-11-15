@@ -12,11 +12,12 @@ function DisplayContent({navigation, studentData, resetForm}) {
     return <StudentInfoTab studentData={studentData} resetForm={resetForm}/>
   } else if (navigation === "Courses") {
     return <StudentCourses id={studentData.id}/>
-  } else if (navigation === "Progress") {
-    return <div>Progress</div>
-  } else if (navigation === "Billing") {
-    return <div>Billling</div>
-  }
+  } 
+  // else if (navigation === "Progress") {
+  //   return <div>Progress</div>
+  // } else if (navigation === "Billing") {
+  //   return <div>Billling</div>
+  // }
   }
 }
 
