@@ -44,32 +44,28 @@ margin-left: -2px;
 
 function StaffInfoTab(props) {
   const [staff, setStaff] = useState({
-                                          cpr: props.staffById.cpr, 
-                                          registrationDate: props.staffById.created_at, 
-                                          name: props.staffById.name, 
-                                          shortName: props.staffById.short_name, 
-                                          gender: props.staffById.gender, 
-                                          birthdate: props.staffById.birthdate, 
-                                          schoolGradeId: props.staffById.school_grade_id, 
-                                          schoolGradeUpdated: props.staffById.grade_updated,
-                                          schoolName: props.staffById.school_name, 
-                                          homeTelephone: props.staffById.home_telephone, 
-                                          mobileTelephone: props.staffById.mobile_number, 
-                                          block: props.staffById.block_code, 
-                                          road: props.staffById.road, 
-                                          building: props.staffById.building, 
-                                          flat: props.staffById.flat, 
-                                          email: props.staffById.email, 
-                                          notes: props.staffById.notes, 
-                                          admin: props.staffById.admin, 
-                                          active: props.staffById.active,
-                                          teaching_rate: props.staffById.teaching_rate
-                                        });
+                                        cpr: props.staffById.cpr, 
+                                        registrationDate: props.staffById.registrationDate, 
+                                        name: props.staffById.name, 
+                                        shortName: props.staffById.short_name, 
+                                        gender: props.staffById.gender, 
+                                        birthdate: props.staffById.birthdate,    
+                                        mobileTelephone: props.staffById.mobile_number,  
+                                        email: props.staffById.email, 
+                                        notes: props.staffById.notes, 
+                                        admin: props.staffById.admin,  
+                                        teaching_rate: props.staffById.teaching_rate,
+                                        active: props.staffById.active,
+                                        accent: props.staffById.accent
+                                      });
  
   // set arrays of foreign key values to use in the dropdown (except 'gender' array it's not a foreign key)
   // note: arrays exclude 'select' [0] index option when assigned to dropdown since its set as all fields required on registration form submit
   const genderArr = ['F', 'M'];
-  const [gender, setGender] = useState('')
+  const [gender, setGender] = useState('');
+  const accentArr = ['North American', 'British', 'Irish', 'Australian', 'Scottish', 'South African',
+                     'French/Brit', 'Local', 'Other'];
+  const [accent, setAccent] = useState('');
 
 
   //toggle visibility of cancel button
@@ -87,8 +83,6 @@ function StaffInfoTab(props) {
   useEffect(() => {
     let options = { year: 'numeric', month: 'numeric', day: 'numeric' }; 
     let birthdate = new Date(props.staffById.birthdate).toLocaleDateString('en-US', options) 
-    let created_at = new Date(props.staffById.created_at).toLocaleDateString('en-US', options)
-    let schoolGradeUpdatedDate = new Date(props.staffById.grade_updated).toLocaleDateString('en-US', options)
  
     //display dropdown value based on the incoming data
     for (let i = 0; i < genderArr.length; i++) {
@@ -97,9 +91,15 @@ function StaffInfoTab(props) {
       }
     }
 
+    //display dropdown value based on the incoming data
+    for (let i = 0; i < accentArr.length; i++) {
+      if (props.staffById.accent === accentArr[i]) {
+        setAccent(accentArr[i]);
+      }
+    }
+
     setStaff({
       cpr: props.staffById.cpr, 
-      registrationDate: created_at, 
       name: props.staffById.name, 
       shortName: props.staffById.short_name, 
       gender: props.staffById.gender, 
@@ -109,7 +109,8 @@ function StaffInfoTab(props) {
       notes: props.staffById.notes, 
       admin: props.staffById.admin,  
       teaching_rate: props.staffById.teaching_rate,
-      active: props.staffById.active
+      active: props.staffById.active,
+      accent: props.staffById.accent
     })
 
   }, [cancel, edited])
@@ -127,14 +128,13 @@ function StaffInfoTab(props) {
         short_name: staff.shortName, 
         gender: staff.gender, 
         birthdate: birthdateISO, 
-        
         mobile_number: staff.mobileTelephone, 
-         
         email: staff.email, 
         notes: staff.notes, 
         admin: staff.admin, 
         teaching_rate: staff.teaching_rate,
-        active: staff.active
+        active: staff.active,
+        accent: staff.accent
       }
       props.editStaffById(props.staffById.id, editStaff);
       setDisabled(true);
@@ -175,21 +175,29 @@ function StaffInfoTab(props) {
     setStaff({...staff, gender: e.value});
     setGender(genderArr[index]); 
   }
-
+ 
+  function handleAccentDropdown(e) {
+    //reassign the dropdown value to the one selected
+    let index;
+    for (let i = 0; i < accentArr.length; i++) {
+      if (accentArr[i] === e.value) {
+        index = i;
+      }
+    }
+    setStaff({...staff, accent: e.value});
+    setAccent(accentArr[index]); 
+  }
 
 
   return (
     <div style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
       <div style={{display: 'flex', justifyContent: 'flex-end'}}>
         <div onClick={handleCancel} 
-             style={{alignSelf: 'flex-end', marginTop: '5px', 
-             marginRight: '40px', cursor: 'pointer', 
+             style={{marginTop: '5px', 
+             marginRight: '5px', cursor: 'pointer', 
              color: '#C73642', display: 'flex', 
              display: `${displayCancelButton}`}}>
           <FontAwesomeIcon icon={faTimesCircle} size='lg' color='#C73642' style={{marginRight: '8px'}}/> {''}
-          <div>
-            Cancel
-          </div>
         </div>
         <div onClick={handleEdit} style={{alignSelf: 'flex-end', marginTop: '5px', marginRight: '40px', cursor: 'pointer', color: '#269FB0', display: 'flex'}}>
           <FontAwesomeIcon icon={edit ? faSave : faEdit} size='lg' color='#269FB0' style={{marginRight: '8px'}}/> {''}
@@ -293,7 +301,7 @@ function StaffInfoTab(props) {
           <Input 
             style={{border: `${edit ? '1px solid #dedbdb' : '1px solid transparent'}`}}
             type="text"
-            name="homeTelephone"
+            name="teaching_rate"
             value={staff.teaching_rate}
             onChange={handleChange}
             disabled={disabled}
@@ -325,33 +333,17 @@ function StaffInfoTab(props) {
             disabled={disabled} />
         </Data>
       </div>
-      
-      <div style={{position: 'relative'}}>
-        <Label>Registration date</Label>
+      <div >
+        <Label>Accent</Label>
         <Data>
-          <Input 
-            style={{border: '1px solid transparent'}}
-            type="text"
-            name="registrationDate"
-            value={staff.registrationDate}
-            onChange={handleChange}
-            disabled={true} />
-        </Data>
-      </div>
-      <div style={{gridColumn: 'span 4'}}>
-        <Label>Notes</Label>
-        <Data>
-          <textarea 
-            style={{width: '100%', height: '80px', outline: 'none', 
-                    border: '1px solid transparent', borderRadius: '3px', 
-                    fontSize: '14px', fontWeight: '400', marginLeft: '-2px',
-                    border: `${edit ? '1px solid #dedbdb' : '1px solid transparent'}`}}
-            type="text"
-            name="notes"
-            value={staff.notes}
-            onChange={handleChange}
-            disabled={disabled}
-          />
+          <Dropdown
+            onChange={handleAccentDropdown} 
+            controlClassName={`myControlClassName editForm${arrowVisibility}`}
+            className='dropdownRoot' 
+            menuClassName='myMenuClassName dropdown-menu'
+            options={accentArr}   
+            value={accent}
+            disabled={disabled} />
         </Data>
       </div>
       </div>

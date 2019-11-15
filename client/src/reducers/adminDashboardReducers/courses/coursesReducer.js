@@ -210,7 +210,7 @@ import {
           let roomArr = ['select'];
           let roomObj = {};
           for (let i = 0; i < action.payload.length; i++) {
-            roomArr.push(action.payload[i].id);
+            roomArr.push(action.payload[i].id.toString());
             roomObj[action.payload[i].id] = action.payload[i].id;
           }
           return {

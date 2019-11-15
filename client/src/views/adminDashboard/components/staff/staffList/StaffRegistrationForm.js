@@ -32,28 +32,34 @@ const Button = styled.button`
   height: 25px;
   border-radius: 3px;
   margin: 10px 5px 10px 10px;
-  background: #D1D9DA;
+  background: #26ABBD;
   text-align: center;
   color: white;
 `
 
 
 function StaffRegistrationForm(props) {
-  const [staff, setStaff] = useState({cpr: '', registrationDate: '', firstName: '', additionalNames: '', 
-                                          gender: '', birthdate: '', schoolGradeId: '', schoolName: '', 
-                                          gradeUpdated: '', homeTelephone: '', mobileTelephone: '', 
-                                          block: '', road: '', building: '', flat: '', email: '', 
-                                          notes: '', contactTypeId: '', noCall: false, delinquent: false,
-                                          expelled: false, locationId: ''});
+  const [staff, setStaff] = useState({
+                                        cpr: '', 
+                                        name: '', 
+                                        short_name: '', 
+                                        gender: '', 
+                                        birthdate: '',    
+                                        mobile_number: '',  
+                                        email: '', 
+                                        admin: '',  
+                                        teaching_rate: '',
+                                        active: '',
+                                        accent: ''
+                                      });
 
  
   // set arrays of foreign key values to use in the dropdown (except 'gender' array it's not a foreign key)
   const genderArr = ['select', 'F', 'M'];
-  const [gender, setGender] = useState(genderArr[0])
-  const [location, setLocation] = useState(props.locationList[0]);
-  const [contact, setContact] = useState(props.preferredContactMethodList[0]);
-  const [schoolGrade, setSchoolGrade] = useState(props.schoolGradeList[0]);
-  const [block, setBlock] = useState(props.blockList[0]);
+  const [gender, setGender] = useState(genderArr[0]);
+  const accentArr = ['North American', 'British', 'Irish', 'Australian', 'Scottish', 'South African',
+                     'French/Brit', 'Local', 'Other'];
+  const [accent, setAccent] = useState('');
 
   // handle required fields (make them all required for now)
   const [errorBorderCpr, setErrorBorderCpr] = useState('transparent'); //error #C73642
@@ -91,24 +97,21 @@ function StaffRegistrationForm(props) {
     event.preventDefault();
 
     // check for required fields
-    if (staff.cpr === '' || staff.firstName === '' || 
-        staff.additionalNames === '' || staff.gender === '' ||
-        staff.birthdate === '' || staff.schoolGradeId === '' || 
-        staff.schoolName === '' || staff.homeTelephone === '' ||
-        staff.mobileTelephone === '' || staff.block === '' || 
-        staff.road === '' || staff.building === '' ||
-        staff.flat === '' || staff.email === '' || 
-        staff.notes === '' || staff.contactTypeId === '' ||
-        staff.locationId === '') 
+    if (staff.cpr === '' || staff.name === '' || 
+        staff.short_name === '' || staff.gender === '' ||
+        staff.birthdate === '' || staff.mobile_number === '' || 
+        staff.email === '' || staff.notes === '' ||
+        staff.admin === '' || staff.teaching_rate === '' || 
+        staff.active === '' || staff.accent === '') 
       { 
         // highlight all that were missed
         if (staff.cpr === '') {
           setErrorBorderCpr('#ef6570');
         } 
-        if (staff.firstName === '') {
+        if (staff.name === '') {
           setErrorBorderFirstName('#ef6570');
         } 
-        if (staff.additionalNames === '') {
+        if (staff.short_name === '') {
           setErrorBorderAdditionalNames('#ef6570');
         }
         if (staff.gender === '') {
@@ -117,85 +120,63 @@ function StaffRegistrationForm(props) {
         if (staff.birthdate === '') {
           setErrorBorderBirthdate('#ef6570');
         }
-        if (staff.schoolGradeId === '') {
+        if (staff.mobile_number === '') {
           setErrorBorderSchoolGrade('#ef6570');
         }
-        if (staff.schoolName === '') {
+        if (staff.email === '') {
           setErrorBorderSchoolName('#ef6570');
         }
-        if (staff.homeTelephone === '') {
+        if (staff.notes === '') {
           setErrorBorderHomeTelephone('#ef6570');
         }
-        if (staff.mobileTelephone === '') {
+        if (staff.admin === '') {
           setErrorBorderMobileTelephone('#ef6570');
         }
-        if (staff.block === '') {
+        if (staff.teaching_rate === '') {
           setErrorBorderBlock('#ef6570');
         }
-        if (staff.road === '') {
+        if (staff.active === '') {
           setErrorBorderRoad('#ef6570');
         }
-        if (staff.building === '') {
-          setErrorBorderBuilding('#ef6570');
+        if (staff.accent === '') {
+          setErrorBorderRoad('#ef6570');
         }
-        if (staff.flat === '') {
-          setErrorBorderFlat('#ef6570');
-        }
-        if (staff.email === '') {
-          setErrorBorderEmail('#ef6570');
-        }
-        if (staff.notes === '') {
-          setErrorBorderNotes('#ef6570');
-        }
-        if (staff.contactTypeId === '') {
-          setErrorBorderContactType('#ef6570');
-        }
-        if (staff.locationId === '') {
-          setErrorBorderLocation('#ef6570');
-        }
-    
     } else {
 
-        const newDate = moment();
-        const newDateISOFormat = newDate.toISOString();
         const birthdateDate = moment(staff.birthdate).toDate();
-        const birthdateISO = birthdateDate.toISOString()
+        const birthdateISO = birthdateDate.toISOString();
 
         const newStaff = {
           "cpr": staff.cpr.toString(),
-          "registration_date": newDateISOFormat,
-          "first_name": staff.firstName,
-          "additional_names": staff.additionalNames,
+          "name": staff.name,
+          "short_name": staff.short_name,
           "gender": staff.gender,
           "birthdate": birthdateISO,
-          "school_grade_id": staff.schoolGradeId,
-          "school_name": staff.schoolName,
-          "home_telephone": staff.homeTelephone.toString(),
-          "mobile_telephone": staff.mobileTelephone.toString(),
-          "block_code": parseInt(staff.block),
-          "road": staff.road.toString(),
-          "building": staff.building.toString(),
-          "flat": staff.flat.toString(),
+          "mobile_number": staff.mobile_number.toString(),
           "email": staff.email,
-          "notes": staff.notes,
-          "preferred_contact_type_id": staff.contactTypeId,
-          "no_call": false,
-          "delinquent": false,
-          "expelled": false,
-          "location_id": staff.locationId,
+          "admin": staff.admin,
+          "teaching_rate": staff.teaching_rate.toString(),
+          "active": staff.active,
+          "accent": staff.accent
         }
 
         props.createNewStaff(newStaff, props.setNewRecord, props.newRecord, 
                               props.displaySuccessMessageTimeout, props.setSavePrevState);
 
         // reset form fields
-        setStaff({cpr: '', registrationDate: '', firstName: '', additionalNames: '', 
-                    gender: '', birthdate: '', schoolGradeId: '', schoolName: '', 
-                    gradeUpdated: '', homeTelephone: '', mobileTelephone: '', 
-                    block: '', road: '', building: '', flat: '', email: '', 
-                    notes: '', contactTypeId: '', noCall: false, delinquent: false,
-                    expelled: false, locationId: ''
-                   });
+        setStaff({
+                  cpr: '', 
+                  name: '', 
+                  short_name: '', 
+                  gender: '', 
+                  birthdate: '',    
+                  mobile_number: '',  
+                  email: '', 
+                  admin: '',  
+                  teaching_rate: '',
+                  active: '',
+                  accent: ''
+                });
 
         // hide the form by reusing the cancel button method
         props.handleCancelButtonOnForm();
@@ -218,54 +199,17 @@ function StaffRegistrationForm(props) {
     setStaff({...staff, gender: e.value});
     setGender(genderArr[index]); 
   }
-  
-  function handleLocationDropdown(e) {
-    //reassign the dropdown value to the one selected
-    let index;
-    for (let i = 0; i < props.locationList.length; i++) {
-      if (props.locationList[i] === e.value) {
-        index = i;
-      }
-    }
-    setStaff({...staff, locationId: props.locationIdLookup[e.value]});
-    setLocation(props.locationList[index]);
-    console.log('LOCATION DROPDOWN: ', props.locationIdLookup[e.value], props.locationIdLookup)
-  }
 
-  function handleContactMethodDropdown(e) {
+  function handleAccentDropdown(e) {
     //reassign the dropdown value to the one selected
     let index;
-    for (let i = 0; i < props.preferredContactMethodList.length; i++) {
-      if (props.preferredContactMethodList[i] === e.value) {
+    for (let i = 0; i < accentArr.length; i++) {
+      if (accentArr[i] === e.value) {
         index = i;
       }
     }
-    setStaff({...staff, contactTypeId: props.preferredContactMethodIdLookup[e.value]});
-    setContact(props.preferredContactMethodList[index]);
-  }
-
-  function handleSchoolGradeDropdown(e) {
-    //reassign the dropdown value to the one selected
-    let index;
-    for (let i = 0; i < props.schoolGradeList.length; i++) {
-      if (props.schoolGradeList[i] === e.value) {
-        index = i;
-      }
-    }
-    setStaff({...staff, schoolGradeId: props.schoolGradeIdLookup[e.value]});
-    setSchoolGrade(props.schoolGradeList[index]);
-  }
-
-  function handleBlockDropdown(e) {
-    //reassign the dropdown value to the one selected
-    let index;
-    for (let i = 0; i < props.blockList.length; i++) {
-      if (props.blockList[i] === e.value) {
-        index = i;
-      }
-    }
-    setStaff({...staff, block: props.blockIdLookup[e.value]});
-    setBlock(props.blockList[index]);
+    setStaff({...staff, accent: e.value});
+    setAccent(accentArr[index]); 
   }
 
   {if (props.createNewStaffIsLoading) {
@@ -279,32 +223,31 @@ function StaffRegistrationForm(props) {
               <div >
                 <label>CPR</label>
                 <div style={{border: `1px solid ${errorBorderCpr}`, borderRadius: '3px'}}>
-                  <Input
-                    type="text"
-                    name="cpr"
-                    value={staff.cpr}
-                    onChange={handleChange} />
+                <Input 
+                  type="text"
+                  name="cpr"
+                  value={staff.cpr}
+                  onChange={handleChange}/>
                 </div>
               </div>
               <div>
                 <label>First Name</label>
                 <div style={{border: `1px solid ${errorBorderFirstName}`, borderRadius: '3px'}}>
-                  <Input
-                    type="text"
-                    name="firstName"
-                    value={staff.firstName}
-                    onChange={handleChange} />
+                <Input 
+                  type="text"
+                  name="name"
+                  value={staff.name}
+                  onChange={handleChange}/>
                 </div>
               </div>
               <div style={{gridColumn: 'span 2'}}>
-                <label>Additional names</label>
+                <label>Short Name</label>
                 <div style={{border: `1px solid ${errorBorderAdditionalNames}`, borderRadius: '3px'}}>
-                  <Input 
-                    style={{width: '100%'}}
-                    type="text"
-                    name="additionalNames"
-                    value={staff.additionalNames}
-                    onChange={handleChange} />
+                <Input 
+                  type="text"
+                  name="short_name"
+                  value={staff.shortName}
+                  onChange={handleChange}/>
                 </div>
               </div>
               <div>
@@ -329,12 +272,12 @@ function StaffRegistrationForm(props) {
                 </div>
               </div>
               <div>
-                <label>School Name</label>
+                <label>Admin</label>
                 <div style={{border: `1px solid ${errorBorderSchoolName}`, borderRadius: '3px'}}>
-                  <Input
-                    type="text"
-                    name="schoolName"
-                    value={staff.schoolName}
+                  <Input 
+                    type="boolean"
+                    name="admin"
+                    value={staff.admin}
                     onChange={handleChange} />
                 </div>
               </div>
@@ -349,24 +292,23 @@ function StaffRegistrationForm(props) {
                 </div>
               </div>
               <div>
-                <label>Location</label>
+                <label>Teaching Rate</label>
                 <div style={{border: `1px solid ${errorBorderLocation}`, borderRadius: '3px'}}>
-                  <Dropdown 
-                    onChange={handleLocationDropdown} 
-                    value={location} 
-                    controlClassName='myControlClassName' 
-                    className='dropdownRoot' 
-                    options={props.locationList} />
+                <Input 
+                  type="text"
+                  name="teaching_rate"
+                  value={staff.teaching_rate}
+                  onChange={handleChange}/>
                 </div>
               </div>
               <div>
-                <label>Home Telephone</label>
+                <label>Active</label>
                 <div style={{border: `1px solid ${errorBorderHomeTelephone}`, borderRadius: '3px'}}>
-                  <Input
-                    type="text"
-                    name="homeTelephone"
-                    value={staff.homeTelephone}
-                    onChange={handleChange} />
+                  <Input 
+                    type="boolean"
+                    name="active"
+                    value={staff.active}
+                    onChange={handleChange}/>
                 </div>
               </div>
               <div>
@@ -374,84 +316,21 @@ function StaffRegistrationForm(props) {
                 <div style={{border: `1px solid ${errorBorderMobileTelephone}`, borderRadius: '3px'}}>
                   <Input
                     type="text"
-                    name="mobileTelephone"
+                    name="mobile_number"
                     value={staff.mobileTelephone}
                     onChange={handleChange} />
                 </div>
               </div>
               <div>
-                <label>Preferred contact method</label>
-                <div style={{border: `1px solid ${errorBorderContactType}`, borderRadius: '3px'}}>
-                  <Dropdown 
-                    onChange={handleContactMethodDropdown} 
-                    value={contact} 
-                    controlClassName='myControlClassName' 
+                <label>Accent</label>
+                <div style={{border: `1px solid ${errorBorderGender}`, borderRadius: '3px'}}>
+                  <Dropdown
+                    onChange={handleAccentDropdown} 
+                    controlClassName='myControlClassName'
                     className='dropdownRoot' 
-                    options={props.preferredContactMethodList} />
-                </div>
-              </div>
-              <div>
-                <label>Block</label>
-                <div style={{border: `1px solid ${errorBorderBlock}`, borderRadius: '3px'}}>
-                  <Dropdown 
-                    onChange={handleBlockDropdown} 
-                    controlClassName='myControlClassName' 
-                    className='dropdownRoot' 
-                    options={props.blockList}   
-                    value={block} />
-                </div>
-              </div>
-              <div>
-                <label>Road</label>
-                <div style={{border: `1px solid ${errorBorderRoad}`, borderRadius: '3px'}}>
-                  <Input
-                    type="text"
-                    name="road"
-                    value={staff.road}
-                    onChange={handleChange} />
-                </div>
-              </div>
-              <div>
-                <label>Building</label>
-                <div style={{border: `1px solid ${errorBorderBuilding}`, borderRadius: '3px'}}>
-                  <Input
-                    type="text"
-                    name="building"
-                    value={staff.building}
-                    onChange={handleChange} />
-                </div>
-              </div>
-              <div>
-                <label>Flat</label>
-                <div style={{border: `1px solid ${errorBorderFlat}`, borderRadius: '3px'}}>
-                  <Input
-                    type="text"
-                    name="flat"
-                    value={staff.flat}
-                    onChange={handleChange} />
-                </div>
-              </div>
-              <div>
-                <label>School grade</label>
-                <div style={{border: `1px solid ${errorBorderSchoolGrade}`, borderRadius: '3px'}}>
-                  <Dropdown 
-                    onChange={handleSchoolGradeDropdown} 
-                    value={schoolGrade} 
-                    controlClassName='myControlClassName' 
-                    className='dropdownRoot' 
-                    options={props.schoolGradeList} />
-                </div>
-              </div>
-              <div style={{gridColumn: 'span 4'}}>
-                <label>Notes</label>
-                <div style={{border: `1px solid ${errorBorderNotes}`, borderRadius: '3px'}}>
-                  <textarea 
-                    style={{width: '100%', height: '80px', outline: 'none', 
-                            border: '1px solid transparent', borderRadius: '3px'}}
-                    type="text"
-                    name="notes"
-                    value={staff.notes}
-                    onChange={handleChange} />
+                    menuClassName='myMenuClassName'
+                    options={accentArr}   
+                    value={accent}/>
                 </div>
               </div>
             </div>

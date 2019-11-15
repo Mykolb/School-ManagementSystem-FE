@@ -10,8 +10,26 @@ function NavBar(props) {
   const [selected, setSelected] = useState(false);
 
   useEffect(() => {
-
-  }, [selected])
+    console.log('NAVBAR HEREEE: ', props)
+    if (props.location.pathname === "/about-us") {
+      setSelected('about');
+    }
+    if (props.location.pathname === "/contact-us") {
+      setSelected('contact');
+    }
+    if (props.location.pathname === "/registration-information") {
+      setSelected('registration')
+    }
+    if (props.location.pathname === "/course-structure") {
+      setSelected('course');
+    }
+    if (props.location.pathname === "/") {
+      setSelected(false);
+    }
+    if (props.location.pathname === "/register") {
+      setSelected(false);
+    }
+  }, [selected, props.toggle])
 
   const handleLogo = () => {
     props.history.push('/')
@@ -19,7 +37,7 @@ function NavBar(props) {
   }
 
   const signIn = () => {
-    props.history.push('/login');
+    // props.history.push('/login');
   }
 
   const handleCourse = () => {
@@ -43,17 +61,24 @@ function NavBar(props) {
     setSelected('contact');
   }
 
+  const handleSignIn = () => {
+    setSelected('signin');
+  }
+
+  const signInText = props.loggedIn ? 'Dashboard' : 'Sign In'
+
   return (
     <div className="nav">
       <div className="navbar-left">
         <a onClick={handleLogo} className="logo"><img className="logo-image" src={Logo}></img></a>
       </div>
       <div className="navbar-right">
-        <Link to='/course-structure' onClick={handleCourse} style={{borderBottom: `${selected === 'course' ? '2px solid #C73642' : '2px solid transparent'}`}}>Course Structure</Link>
-        <Link to='/registration-information' onClick={handleRegistration} style={{borderBottom: `${selected === 'registration' ? '2px solid #C73642' : '2px solid transparent'}`}}>Registration Information</Link>
-        <Link to='/about-us' onClick={handleAbout} style={{borderBottom: `${selected === 'about' ? '2px solid #C73642' : '2px solid transparent'}`}}>About Us</Link>
-        <Link to='/contact-us' onClick={handleContact} style={{borderBottom: `${selected === 'contact' ? '2px solid #C73642' : '2px solid transparent'}`}}>Contact Us</Link>
-        <button onClick={signIn}>Sign In</button>
+        <Link to='/course-structure' onClick={handleCourse} style={{borderBottom: `${selected === 'course' && selected !== 'signin' ? '2px solid #C73642' : '2px solid transparent'}`}}>Course Structure</Link>
+        <Link to='/registration-information' onClick={handleRegistration} style={{borderBottom: `${selected === 'registration' && selected !== 'signin' ? '2px solid #C73642' : '2px solid transparent'}`}}>Registration Information</Link>
+        <Link to='/about-us' onClick={handleAbout} style={{borderBottom: `${selected === 'about' && selected !== 'signin' ? '2px solid #C73642' : '2px solid transparent'}`}}>About Us</Link>
+        <Link to='/contact-us' onClick={handleContact} style={{borderBottom: `${selected === 'contact' && selected !== 'signin' ? '2px solid #C73642' : '2px solid transparent'}`}}>Contact Us</Link>
+        <Link to='/login' onClick={handleSignIn} className="button" >{signInText}</Link>
+        {/* <button onClick={signIn}>{signInText}</button> */}
       </div>
     </div>
   )
@@ -62,7 +87,9 @@ function NavBar(props) {
 
 const mapStateToProps = state => {
   return {
-    reset: state.landingPageReducer.reset
+    reset: state.landingPageReducer.reset,
+    loggedIn: state.authenticationReducer.user.authenticated,
+    toggle: state.landingPageReducer.toggle
   };
 };
 

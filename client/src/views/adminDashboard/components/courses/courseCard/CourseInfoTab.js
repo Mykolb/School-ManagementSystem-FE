@@ -89,10 +89,6 @@ function CourseInfoTab(props) {
   const [edited, setEdited] = useState(props.edited);
 
   useEffect(() => {
-    // let options = { year: 'numeric', month: 'numeric', day: 'numeric' }; 
-    // let birthdate = new Date(props.studentById.birthdate).toLocaleDateString('en-US', options) 
-    // let registration_date = new Date(props.studentById.registration_date).toLocaleDateString('en-US', options)
-    // let schoolGradeUpdatedDate = new Date(props.studentById.grade_updated).toLocaleDateString('en-US', options)
  
     //display dropdown value based on the incoming data
     for (let i = 0; i < statusArr.length; i++) {
@@ -135,8 +131,6 @@ function CourseInfoTab(props) {
         setLevel(key);
       }
     }
-
-    console.log('HERE LEVEL: ', props.courseById.level_id, props.levelListIdLookup)
 
     //display dropdown value based on the incoming data
     for (let key in props.courseScheduleIdLookup) {
@@ -182,11 +176,6 @@ function CourseInfoTab(props) {
 
   const handleEdit = () => {
     if (edit) {
-      // const birthdate = moment(student.birthdate).toDate();
-      // const birthdateISO = birthdate.toISOString();
-
-      // const schoolGradeUpdated = moment(student.birthdate).toDate();
-      // const schoolGradeUpdatedISO = schoolGradeUpdated.toISOString();
 
       const editCourse  = {
         id: props.courseById.id,
@@ -347,14 +336,11 @@ function CourseInfoTab(props) {
     <div style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
       <div style={{display: 'flex', justifyContent: 'flex-end'}}>
         <div onClick={handleCancel} 
-             style={{alignSelf: 'flex-end', marginTop: '5px', 
-             marginRight: '40px', cursor: 'pointer', 
+             style={{marginTop: '5px', 
+             marginRight: '5px', cursor: 'pointer', 
              color: '#C73642', display: 'flex', 
              display: `${displayCancelButton}`}}>
           <FontAwesomeIcon icon={faTimesCircle} size='lg' color='#C73642' style={{marginRight: '8px'}}/> {''}
-          <div>
-            Cancel
-          </div>
         </div>
         <div onClick={handleEdit} style={{alignSelf: 'flex-end', marginTop: '5px', marginRight: '40px', cursor: 'pointer', color: '#269FB0', display: 'flex'}}>
           <FontAwesomeIcon icon={edit ? faSave : faEdit} size='lg' color='#269FB0' style={{marginRight: '8px'}}/> {''}

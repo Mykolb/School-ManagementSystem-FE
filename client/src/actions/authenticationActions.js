@@ -13,7 +13,7 @@ export const LOGOUT_START = 'LOGOUT_START';
 export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
 export const LOGOUT_FAILURE = 'LOGOUT_FAILURE';
 
-export const loggedIn = (history) => {
+export const loggedIn = (history, location) => {
   return dispatch => {
     dispatch({ type: LOGGEDIN_START });
     
@@ -21,11 +21,9 @@ export const loggedIn = (history) => {
       .get('https://speak-out-be-staging.herokuapp.com/user')
       .then(res => {
         dispatch({ type: LOGGEDIN_SUCCESS, payload: res.data })
-        if (!res.data.authenticated) {
-          history.push('/')
-        } else {
-          history.push('/dashboard')
-        }
+          if (!res.data.authenticated && location.pathname === '/dashboard') {
+            history.push('/login');
+          }
       })
       .catch(err => {
         console.log('ERROR', err)

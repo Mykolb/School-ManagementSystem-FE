@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { withRouter } from "react-router";
 import { connect } from 'react-redux';
 import AdminDashboard from './adminDashboard/components/index';
@@ -11,7 +11,7 @@ function Index(props) {
       return (
         <AdminDashboard />
       )
-  } else if (props.user.username === 'parent') {
+  } else if (props.user.username === 'Parent Test') {
       return (
         <ParentDashboard />
       )
@@ -19,7 +19,7 @@ function Index(props) {
       return (
         <StaffDashboard />
       )
-    }
+    } 
   }
 }
 

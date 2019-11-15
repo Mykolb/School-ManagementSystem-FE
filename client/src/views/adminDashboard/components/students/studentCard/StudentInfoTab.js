@@ -278,14 +278,11 @@ function StudentInfoTab(props) {
     <div style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
       <div style={{display: 'flex', justifyContent: 'flex-end'}}>
         <div onClick={handleCancel} 
-             style={{alignSelf: 'flex-end', marginTop: '5px', 
-             marginRight: '40px', cursor: 'pointer', 
+             style={{marginTop: '5px', 
+             marginRight: '5px', cursor: 'pointer', 
              color: '#C73642', display: 'flex', 
              display: `${displayCancelButton}`}}>
           <FontAwesomeIcon icon={faTimesCircle} size='lg' color='#C73642' style={{marginRight: '8px'}}/> {''}
-          <div>
-            Cancel
-          </div>
         </div>
         <div onClick={handleEdit} style={{alignSelf: 'flex-end', marginTop: '5px', marginRight: '40px', cursor: 'pointer', color: '#269FB0', display: 'flex'}}>
           <FontAwesomeIcon icon={edit ? faSave : faEdit} size='lg' color='#269FB0' style={{marginRight: '8px'}}/> {''}

@@ -4,7 +4,6 @@ import { getCourseById, resetForm }
        from '../../../../../actions/adminDashboardActions/courses/courseAction';
 import { withRouter } from 'react-router-dom';
 import 'antd/dist/antd.css';
-// import './StudentCard.css';
 import { courseCardTabs } from '../../../../../data';
 import DisplayContent from './DisplayContent';
 import styled from 'styled-components';
@@ -29,6 +28,7 @@ const ButtonWrap = styled.div`
 const TitleWrap = styled.div`
   display: flex;
   justify-content: flex-start;
+  align-items: center;
   margin-top: 40px;
   margin-bottom: 60px;
 `
@@ -46,10 +46,41 @@ const CourseCard = props => {
   const [navigation, setNavigation] = useState('Course Information');
   const [selected, setSelected] = useState(navigation);
   const [resetForm, setResetForm] = useState(false);
+  const [displayTerm, setDisplayTerm] = useState('');
+  const [displayLevel, setDisplayLevel] = useState('');
+  const [displayTeacher, setDisplayTeacher] = useState('');
+  const [displayCourseSchedule, setDisplayCourseSchedule] = useState('');
 
   
   useEffect(() => {
-    props.getCourseById(props.id)  
+    props.getCourseById(props.id);
+
+    //display the value of foreign key term
+    for (let key in props.termIdLookup) {
+      if (props.termIdLookup[key] === props.courseById.term_id) {
+        let split = key.split(' ');
+        let combine = split.slice(0, 2).join(' ');
+        setDisplayTerm(combine);
+      }
+    }
+
+    for (let key in props.levelListIdLookup) {
+      if (props.levelListIdLookup[key] === props.courseById.level_id) {
+        setDisplayLevel(key);
+      }
+    }
+
+    for (let key in props.teacherIdLookup) {
+      if (props.teacherIdLookup[key] === props.courseById.teacher_id) {
+        setDisplayTeacher(key);
+      }
+    }
+
+    for (let key in props.courseScheduleIdLookup) {
+      if (props.courseScheduleIdLookup[key] === props.courseById.course_schedule_id) {
+        setDisplayCourseSchedule(key);
+      }
+    }
   }, [])
 
   const goBack = () => {
@@ -70,9 +101,14 @@ const CourseCard = props => {
                 <div style={{width: '130px', height: '130px', borderRadius: '50%', background: '#d6d5d6'}}>
                 </div>
                 <div style={{display: 'flex', flexDirection: 'column', marginLeft: '20px', textAlign: 'left'}}>
-                  <h1 style={{fontSize: '34px', marginBottom: '0px'}}>{props.courseById.level}</h1>
-                  <p>TERM: {props.courseById.term}</p>
-                  <p>Course ID: {props.courseById.id}</p>
+                  
+                  <h1 style={{fontSize: '34px', marginBottom: '0px'}}>{displayLevel}</h1>
+                  <div style={{display: 'grid', textAlign: 'center', gridTemplateColumns: '1fr 1fr',
+                         gridGap: '10px'}}>
+                    <p style={{backgroundColor: '#CDD5E9', padding: '5px 10px 5px 10px', marginBottom: '0px', fontWeight: '500'}}>{displayTerm}</p>
+                    <p style={{backgroundColor: '#CDD5E9', padding: '5px 10px 5px 10px', marginBottom: '0px', fontWeight: '500'}}>{displayTeacher}</p>
+                  <p style={{backgroundColor: '#CDD5E9', padding: '5px 10px 5px 10px', fontWeight: '500'}}>{displayCourseSchedule}</p>
+                  </div>
                 </div>
             </TitleWrap>
             <TabsWrap>
@@ -116,10 +152,11 @@ function Tab(props) {
 
 const mapStateToProps = state => {
   return {
-      // cardIsLoading: state.courseReducer.cardIsLoading,
       courseById: state.coursesReducer.courseById,
-      // cardIsEditing: state.courseReducer.cardIsEditting,
-      // resetForm: state.courseReducer.resetForm,
+      termIdLookup: state.coursesReducer.termIdLookup,
+      levelListIdLookup: state.coursesReducer.levelListIdLookup,
+      teacherIdLookup: state.coursesReducer.teacherIdLookup,
+      courseScheduleIdLookup: state.coursesReducer.courseScheduleIdLookup
   };
 };
 

@@ -1,20 +1,35 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
+<<<<<<< HEAD
 import { getCoursesByStudent } from '../../../../../actions/adminDashboardActions/students/studentsActions';
+=======
+import { getCoursesByStaff } from '../../../../../actions/adminDashboardActions/staff/staffActions';
+>>>>>>> 21656f60c0689190c1a0f17611a2d02b27fdbf29
 import { Table, Spin } from 'antd';
 import 'antd/dist/antd.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+<<<<<<< HEAD
 import './StaffCourses.css'
 
 const StudentCourses = props => {
+=======
+
+// import '../mainStyle/mainCard.scss'
+
+const StaffCourses = props => {
+>>>>>>> 21656f60c0689190c1a0f17611a2d02b27fdbf29
   const [search, setSearch] = useState('');
   const [form, setForm] = useState(false);
 
 
   useEffect(() => {
+<<<<<<< HEAD
     props.getCoursesByStudent(props.id);
+=======
+    props.getCoursesByStaff(props.id);
+>>>>>>> 21656f60c0689190c1a0f17611a2d02b27fdbf29
   }, [])
 
   const handleCancelButtonOnForm = () => {
@@ -71,31 +86,31 @@ const StudentCourses = props => {
     },
   ];
 
-  // const studentData = props.studentList.sort((a, b) => {
+  // const StaffData = props.StaffList.sort((a, b) => {
   //   return b.id - a.id
   // }
   // )
 
   return (
-    <div className="student-courses" style={{marginLeft: "-20px" }}>
+    <div>
       
       {props.isLoading ? (
-        <Spin style={{ marginTop: '150px'}} size="large" />
+        <Spin style={{ marginTop: '150px' }} size="large" />
       ) : (
           <Table
-            className=""
+            className="rowHover"
             dataSource={props.courseList}
             columns={columns}
-            pagination={false}
+            pagination={{ pageSize: 15 }}
             rowKey='id'
-            // onRow={(record, rowIndex) => {
-            //   return {
-            //     onClick: event => {
-            //       // props.setNavigation('courseCardView')
-            //       // props.setCourseID(record.id)
-            //     }
-            //   };
-            // }}
+            onRow={(record, rowIndex) => {
+              return {
+                onClick: event => {
+                  // props.setCourseView('courseCardView')
+                  // props.setCourseID(record.id)
+                }
+              };
+            }}
           />
         )}
     </div>
@@ -104,8 +119,8 @@ const StudentCourses = props => {
 
 const mapStateToProps = state => {
   return {
-    isLoading: state.studentsReducer.courseListIsLoading,
-    courseList: state.studentsReducer.courseList,
+    isLoading: state.staffReducer.courseListIsLoading,
+    courseList: state.staffReducer.courseList,
     // error: state.coursesReducer.error,
   };
 };
@@ -113,7 +128,7 @@ const mapStateToProps = state => {
 export default withRouter(
   connect(
     mapStateToProps,
-    { getCoursesByStudent }
-  )(StudentCourses)
+    { getCoursesByStaff }
+  )(StaffCourses)
 )
 

@@ -75,9 +75,9 @@ const StudentTable = props => {
           <div>
               <div className="row-above">
                 <div className="create-new-entry">
-                  <div style={{display: 'flex', marginRight: '10px', display: `${displaySuccessMessage}`}}>
-                    <div style={{marginRight: '10px', color: '#0FDF0B'}}>Student has been successfully added</div>
-                    <div><FontAwesomeIcon style={{width: '25px', height: '25px', cursor: 'pointer', color: '#0FDF0B'}} icon={faCheck} size='lg'/></div>
+                  <div style={{display: 'flex', marginRight: '10px', alignItems: 'center', display: `${displaySuccessMessage}`}}>
+                    <div style={{marginRight: '10px', color: '#0FDF0B', fontSize: '12px'}}>Student has been successfully added</div>
+                    <div><FontAwesomeIcon style={{width: '12px', cursor: 'pointer', color: '#0FDF0B'}} icon={faCheck} size='lg'/></div>
                   </div>
                   <div style={{display: 'flex'}}>
                     <div style={{marginRight: '10px', color: '#269FB0'}}>Add Student</div>

@@ -59,20 +59,9 @@ export {
 
 } from './adminDashboardActions/courses/courseAction';
 
-// export {
-//   toggleEditComponent,
-//   getStudentById,
-//   FETCH_STUDENTBYID_START,
-//   FETCH_STUDENTBYID_SUCCESS,
-//   FETCH_STUDENTBYID_FAILURE,
-
-//   editStudentById,
-//   EDIT_STUDENTBYID_START,
-//   EDIT_STUDENTBYID_SUCCESS,
-//   EDIT_STUDENTBYID_FAILURE,
-  
-//   deleteStudentById,
-//   DELETE_STUDENTBYID_START,
-//   DELETE_STUDENTBYID_SUCCESS,
-//   DELETE_STUDENTBYID_FAILURE,
-// } from './adminDashboardActions/studentByIdAction.js'
+export {
+  familyRegister,
+  FAMILY_REGISTER_START,
+  FAMILY_REGISTER_SUCCESS,
+  FAMILY_REGISTER_FAILURE
+} from "./registrationActions";

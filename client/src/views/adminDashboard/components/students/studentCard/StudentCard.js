@@ -71,8 +71,11 @@ const StudentCard = props => {
                 </div>
                 <div style={{display: 'flex', flexDirection: 'column', marginLeft: '20px', textAlign: 'left'}}>
                   <h1 style={{fontSize: '34px', marginBottom: '0px'}}>{props.studentById.first_name}</h1>
-                  <p>CPR: {props.studentById.cpr}</p>
-                  <p>Student ID: {props.studentById.id}</p>
+                  <div style={{display: 'grid', textAlign: 'center', gridTemplateColumns: '1fr',
+                         gridGap: '10px'}}>
+                    <p style={{backgroundColor: '#CDD5E9', padding: '5px 10px 5px 10px', marginBottom: '0px', fontWeight: '500'}}>CPR #   {props.studentById.cpr}</p>
+                    <p style={{backgroundColor: '#CDD5E9', padding: '5px 10px 5px 10px', marginBottom: '0px', fontWeight: '500'}}>STUDENT ID   {props.studentById.id}</p>
+                  </div>
                 </div>
             </TitleWrap>
             <TabsWrap>

@@ -71,8 +71,11 @@ const StaffCard = props => {
                 </div>
                 <div style={{display: 'flex', flexDirection: 'column', marginLeft: '20px', textAlign: 'left'}}>
                   <h1 style={{fontSize: '34px', marginBottom: '0px'}}>{props.staffById.name}</h1>
-                  <p>CPR: {props.staffById.cpr}</p>
-                  <p>Staff ID: {props.staffById.id}</p>
+                  <div style={{display: 'grid', textAlign: 'center', gridTemplateColumns: '1fr',
+                         gridGap: '10px'}}>
+                    <p style={{backgroundColor: '#CDD5E9', padding: '5px 10px 5px 10px', marginBottom: '0px', fontWeight: '500'}}>CPR: {props.staffById.cpr}</p>
+                    <p style={{backgroundColor: '#CDD5E9', padding: '5px 10px 5px 10px', marginBottom: '0px', fontWeight: '500'}}>Accent: {props.staffById.accent}</p>
+                  </div>
                 </div>
             </TitleWrap>
             <TabsWrap>

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import StaffInfoTab from './StaffInfoTab';
 import StaffCourses from './StaffCourses';
 
-function DisplayContent({setNavigation, navigation, staffData, resetForm}) {
+function DisplayContent({navigation, staffData, resetForm}) {
 
   useEffect(() => {
     console.log('DISPLAY COMPONENT')
@@ -11,7 +11,7 @@ function DisplayContent({setNavigation, navigation, staffData, resetForm}) {
   {if (navigation === "Staff Information") {
     return <StaffInfoTab staffData={staffData} resetForm={resetForm}/>
   } else if (navigation === "Courses") {
-    return <StaffCourses id={staffData.id} navigation={navigation} setNavigation={setNavigation}/>
+    return <StaffCourses id={staffData.id}/>
   } 
   }
 }

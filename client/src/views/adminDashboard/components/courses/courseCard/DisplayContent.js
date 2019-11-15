@@ -11,9 +11,8 @@ function DisplayContent({navigation, courseData, resetForm}) {
 
   {if (navigation === "Course Information") {
     return <CourseInfoTab courseData={courseData} resetForm={resetForm}/>
-    // return <div>Course Info</div>
   } else if (navigation === "Enrolled Students") {
-    return <div>Enrolled Students</div>
+     return <div>Enrolled Students</div>
   } 
   }
 }
