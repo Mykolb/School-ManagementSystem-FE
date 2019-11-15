@@ -1,35 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
-<<<<<<< HEAD
-import { getCoursesByStudent } from '../../../../../actions/adminDashboardActions/students/studentsActions';
-=======
 import { getCoursesByStaff } from '../../../../../actions/adminDashboardActions/staff/staffActions';
->>>>>>> 21656f60c0689190c1a0f17611a2d02b27fdbf29
 import { Table, Spin } from 'antd';
 import 'antd/dist/antd.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
-<<<<<<< HEAD
-import './StaffCourses.css'
-
-const StudentCourses = props => {
-=======
 
 // import '../mainStyle/mainCard.scss'
 
 const StaffCourses = props => {
->>>>>>> 21656f60c0689190c1a0f17611a2d02b27fdbf29
   const [search, setSearch] = useState('');
   const [form, setForm] = useState(false);
 
 
   useEffect(() => {
-<<<<<<< HEAD
-    props.getCoursesByStudent(props.id);
-=======
     props.getCoursesByStaff(props.id);
->>>>>>> 21656f60c0689190c1a0f17611a2d02b27fdbf29
   }, [])
 
   const handleCancelButtonOnForm = () => {
